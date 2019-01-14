@@ -3,9 +3,10 @@
 [.small]#<<web.adoc#mvc-view,Same as in Spring MVC>>#
 
 The use of view technologies in Spring WebFlux is pluggable. Whether you decide to
-use Thymeleaf, FreeMarker, or some other view technology is primarily a matter of a configuration change.
-This chapter covers the view technologies integrated with Spring WebFlux. We assume you are
-already familiar with <<webflux-viewresolution>>.
+use Thymeleaf, FreeMarker, or some other view technology is primarily a matter of a
+configuration change. This chapter covers the view technologies integrated with Spring
+WebFlux. We assume you are already familiar with <<webflux-viewresolution>>.
+
 
 
 
@@ -29,6 +30,7 @@ http://forum.thymeleaf.org/Thymeleaf-3-0-8-JUST-PUBLISHED-td4030687.html[announc
 
 
 
+
 [[webflux-view-freemarker]]
 == FreeMarker
 [.small]#<<web.adoc#mvc-view-freemarker,Same as in Spring MVC>>#
@@ -45,7 +47,6 @@ integration for using Spring WebFlux with FreeMarker templates.
 
 The following example shows how to configure FreeMarker as a view technology:
 
-====
 [source,java,indent=0]
 [subs="verbatim,quotes"]
 ----
@@ -68,7 +69,6 @@ The following example shows how to configure FreeMarker as a view technology:
 		}
 	}
 ----
-====
 
 Your templates need to be stored in the directory specified by the `FreeMarkerConfigurer`,
 shown in the preceding example. Given the preceding configuration, if your controller returns the view name,
@@ -87,7 +87,6 @@ the `FreeMarkerConfigurer` bean. The `freemarkerSettings` property requires a
 `java.util.Properties` object, and the `freemarkerVariables` property requires a
 `java.util.Map`. The following example shows how to use a `FreeMarkerConfigurer`:
 
-====
 [source,java,indent=0]
 [subs="verbatim,quotes"]
 ----
@@ -109,10 +108,10 @@ the `FreeMarkerConfigurer` bean. The `freemarkerSettings` property requires a
 		}
 	}
 ----
-====
 
 See the FreeMarker documentation for details of settings and variables as they apply to
 the `Configuration` object.
+
 
 
 
@@ -170,7 +169,6 @@ You can declare a `ScriptTemplateConfigurer` bean to specify the script engine t
 the script files to load, what function to call to render templates, and so on.
 The following example uses Mustache templates and the Nashorn JavaScript engine:
 
-====
 [source,java,indent=0]
 [subs="verbatim,quotes"]
 ----
@@ -194,7 +192,6 @@ The following example uses Mustache templates and the Nashorn JavaScript engine:
 		}
 	}
 ----
-====
 
 The `render` function is called with the following parameters:
 
@@ -214,7 +211,6 @@ http://en.wikipedia.org/wiki/Polyfill[polyfill] in order to emulate some
 browser facilities not available in the server-side script engine.
 The following example shows how to set a custom render function:
 
-====
 [source,java,indent=0]
 [subs="verbatim,quotes"]
 ----
@@ -238,7 +234,6 @@ The following example shows how to set a custom render function:
 		}
 	}
 ----
-====
 
 NOTE: Setting the `sharedEngine` property to `false` is required when using non-thread-safe
 script engines with templating libraries not designed for concurrency, such as Handlebars or
@@ -248,13 +243,11 @@ to https://bugs.openjdk.java.net/browse/JDK-8076099[this bug].
 `polyfill.js` defines only the `window` object needed by Handlebars to run properly,
 as the following snippet shows:
 
-====
 [source,javascript,indent=0]
 [subs="verbatim,quotes"]
 ----
 	var window = {};
 ----
-====
 
 This basic `render.js` implementation compiles the template before using it. A production
 ready implementation should also store and reused cached templates or pre-compiled templates.
@@ -262,7 +255,6 @@ This can be done on the script side, as well as any customization you need (mana
 template engine configuration for example).
 The following example shows how compile a template:
 
-====
 [source,javascript,indent=0]
 [subs="verbatim,quotes"]
 ----
@@ -271,12 +263,12 @@ The following example shows how compile a template:
 		return compiledTemplate(model);
 	}
 ----
-====
 
 Check out the Spring Framework unit tests,
 https://github.com/spring-projects/spring-framework/tree/master/spring-webflux/src/test/java/org/springframework/web/reactive/result/view/script[Java], and
 https://github.com/spring-projects/spring-framework/tree/master/spring-webflux/src/test/resources/org/springframework/web/reactive/result/view/script[resources],
 for more configuration examples.
+
 
 
 

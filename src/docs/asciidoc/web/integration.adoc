@@ -14,8 +14,10 @@ popular third party web frameworks.
 
 
 
+
 [[web-integration-common]]
 == Common Configuration
+
 Before diving into the integration specifics of each supported web framework, let us
 first take a look at the Spring configuration that is not specific to any one web
 framework. (This section is equally applicable to Spring's own web framework, Spring
@@ -41,7 +43,6 @@ set of Spring XML configuration files to load.
 
 Consider the following `<listener/>` configuration:
 
-====
 [source,xml,indent=0]
 [subs="verbatim,quotes"]
 ----
@@ -49,11 +50,9 @@ Consider the following `<listener/>` configuration:
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 ----
-====
 
 Further consider the following `<context-param/>` configuration:
 
-====
 [source,xml,indent=0]
 [subs="verbatim,quotes"]
 ----
@@ -62,7 +61,6 @@ Further consider the following `<context-param/>` configuration:
 		<param-value>/WEB-INF/applicationContext*.xml</param-value>
 	</context-param>
 ----
-====
 
 If you do not specify the `contextConfigLocation` context parameter, the
 `ContextLoaderListener` looks for a file called `/WEB-INF/applicationContext.xml` to
@@ -77,13 +75,11 @@ created by the `ContextLoaderListener`.
 
 The following example shows how to get the `WebApplicationContext`:
 
-====
 [source,java,indent=0]
 [subs="verbatim,quotes"]
 ----
 	WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(servletContext);
 ----
-====
 
 The
 {api-spring-framework}/web/context/support/WebApplicationContextUtils.html[`WebApplicationContextUtils`]
@@ -102,6 +98,7 @@ Fortunately, most of the frameworks in this section have simpler ways of looking
 beans. Not only do they make it easy to get beans from a Spring container, but they also
 let you use dependency injection on their controllers. Each web framework section
 has more detail on its specific integration strategies.
+
 
 
 
@@ -137,7 +134,6 @@ implementation.
 Configuration-wise, you can define `SpringBeanFacesELResolver` in your JSF
 `faces-context.xml` file, as the following example shows:
 
-====
 [source,xml,indent=0]
 [subs="verbatim,quotes"]
 ----
@@ -148,7 +144,6 @@ Configuration-wise, you can define `SpringBeanFacesELResolver` in your JSF
 		</application>
 	</faces-config>
 ----
-====
 
 
 
@@ -163,13 +158,12 @@ takes a `FacesContext` parameter rather than a `ServletContext` parameter.
 
 The following example shows how to use `FacesContextUtils`:
 
-====
 [source,java,indent=0]
 [subs="verbatim,quotes"]
 ----
 	ApplicationContext ctx = FacesContextUtils.getWebApplicationContext(FacesContext.getCurrentInstance());
 ----
-====
+
 
 
 
@@ -189,6 +183,7 @@ built-in Spring integration shipped with Struts.
 
 
 
+
 [[tapestry]]
 == Tapestry 5.x
 
@@ -205,8 +200,10 @@ Spring].
 
 
 
+
 [[web-integration-resources]]
 == Further Resources
+
 The following links go to further resources about the various web frameworks described in this
 chapter.
 

@@ -7,6 +7,7 @@ describes how to do so.
 
 
 
+
 [[mvc-cors-intro]]
 == Introduction
 [.small]#<<web-reactive.adoc#webflux-cors-intro,Same as in Spring WebFlux>>#
@@ -20,6 +21,7 @@ Cross-Origin Resource Sharing (CORS) is a http://www.w3.org/TR/cors/[W3C specifi
 implemented by http://caniuse.com/#feat=cors[most browsers] that lets you specify
 what kind of cross-domain requests are authorized, rather than using less secure and less
 powerful workarounds based on IFRAME or JSONP.
+
 
 
 
@@ -72,15 +74,15 @@ To learn more from the source or make advanced customizations, check the code be
 
 
 
+
 [[mvc-cors-controller]]
-== Using `@CrossOrigin`
+== `@CrossOrigin`
 [.small]#<<web-reactive.adoc#webflux-cors-controller,Same as in Spring WebFlux>>#
 
 The {api-spring-framework}/web/bind/annotation/CrossOrigin.html[`@CrossOrigin`]
 annotation enables cross-origin requests on annotated controller methods,
 as the following example shows:
 
-====
 [source,java,indent=0]
 [subs="verbatim,quotes"]
 ----
@@ -100,7 +102,6 @@ public class AccountController {
 	}
 }
 ----
-====
 
 By default, `@CrossOrigin` allows:
 
@@ -117,7 +118,6 @@ should only be used where appropriate.
 `@CrossOrigin` is supported at the class level, too, and is inherited by all methods,
 as the following example shows:
 
-====
 [source,java,indent=0]
 [subs="verbatim,quotes"]
 ----
@@ -137,12 +137,10 @@ public class AccountController {
 	}
 }
 ----
-====
 
 You can use `@CrossOrigin` at both the class level and the method level,
 as the following example shows:
 
-====
 [source,java,indent=0]
 [subs="verbatim,quotes"]
 ----
@@ -163,7 +161,7 @@ public class AccountController {
 	}
 }
 ----
-====
+
 
 
 
@@ -191,7 +189,6 @@ should only be used where appropriate.
 
 
 
-
 [[mvc-cors-global-java]]
 === Java Configuration
 [.small]#<<web-reactive.adoc#webflux-cors-global,Same as in Spring WebFlux>>#
@@ -199,7 +196,6 @@ should only be used where appropriate.
 To enable CORS in the MVC Java config, you can use the `CorsRegistry` callback,
 as the following example shows:
 
-====
 [source,java,indent=0]
 [subs="verbatim,quotes"]
 ----
@@ -221,7 +217,6 @@ public class WebConfig implements WebMvcConfigurer {
 	}
 }
 ----
-====
 
 
 
@@ -231,7 +226,6 @@ public class WebConfig implements WebMvcConfigurer {
 To enable CORS in the XML namespace, you can use the `<mvc:cors>` element,
 as the following example shows:
 
-====
 [source,xml,indent=0]
 [subs="verbatim"]
 ----
@@ -249,7 +243,7 @@ as the following example shows:
 
 </mvc:cors>
 ----
-====
+
 
 
 
@@ -268,7 +262,6 @@ for CORS.
 To configure the filter, pass a
 `CorsConfigurationSource` to its constructor, as the following example shows:
 
-====
 [source,java,indent=0]
 [subs="verbatim"]
 ----
@@ -287,4 +280,3 @@ source.registerCorsConfiguration("/**", config);
 
 CorsFilter filter = new CorsFilter(source);
 ----
-====

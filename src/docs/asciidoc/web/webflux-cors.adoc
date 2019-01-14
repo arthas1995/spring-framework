@@ -7,6 +7,7 @@ describes how to do so.
 
 
 
+
 [[webflux-cors-intro]]
 == Introduction
 [.small]#<<web.adoc#mvc-cors-intro,Same as in Spring MVC>>#
@@ -20,6 +21,7 @@ Cross-Origin Resource Sharing (CORS) is a http://www.w3.org/TR/cors/[W3C specifi
 implemented by http://caniuse.com/#feat=cors[most browsers] that lets you specify
 what kind of cross-domain requests are authorized, rather than using less secure and less
 powerful workarounds based on IFRAME or JSONP.
+
 
 
 
@@ -72,15 +74,15 @@ To learn more from the source or to make advanced customizations, see:
 
 
 
+
 [[webflux-cors-controller]]
-== Using `@CrossOrigin`
+== `@CrossOrigin`
 [.small]#<<web.adoc#mvc-cors-controller,Same as in Spring MVC>>#
 
 The {api-spring-framework}/web/bind/annotation/CrossOrigin.html[`@CrossOrigin`]
 annotation enables cross-origin requests on annotated controller methods, as the
 following example shows:
 
-====
 [source,java,indent=0]
 [subs="verbatim,quotes"]
 ----
@@ -100,7 +102,6 @@ public class AccountController {
 	}
 }
 ----
-====
 
 By default, `@CrossOrigin` allows:
 
@@ -118,7 +119,6 @@ should be used only where appropriate.
 `@CrossOrigin` is supported at the class level, too, and inherited by all methods.
 The following example specifies a certain domain and sets `maxAge` to an hour:
 
-====
 [source,java,indent=0]
 [subs="verbatim,quotes"]
 ----
@@ -138,11 +138,9 @@ public class AccountController {
 	}
 }
 ----
-====
 
 You can use `@CrossOrigin` at both the class and the method level,
 as the following example shows:
-====
 
 [source,java,indent=0]
 [subs="verbatim,quotes"]
@@ -166,7 +164,6 @@ public class AccountController {
 ----
 <1> Using `@CrossOrigin` at the class level.
 <2> Using `@CrossOrigin` at the method level.
-====
 
 
 
@@ -194,7 +191,6 @@ should be used only where appropriate.
 To enable CORS in the WebFlux Java configuration, you can use the `CorsRegistry` callback,
 as the following example shows:
 
-====
 [source,java,indent=0]
 [subs="verbatim,quotes"]
 ----
@@ -216,7 +212,7 @@ public class WebConfig implements WebFluxConfigurer {
 	}
 }
 ----
-====
+
 
 
 
@@ -231,7 +227,6 @@ good fit with <<webflux-fn,functional endpoints>>.
 To configure the filter, you can declare a `CorsWebFilter` bean and pass a
 `CorsConfigurationSource` to its constructor, as the following example shows:
 
-====
 [source,java,indent=0]
 [subs="verbatim"]
 ----
@@ -254,4 +249,3 @@ CorsWebFilter corsFilter() {
 	return new CorsWebFilter(source);
 }
 ----
-====
