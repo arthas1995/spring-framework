@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -485,14 +485,14 @@ public abstract class CacheAspectSupport extends AbstractCacheInvoker
 		for (Cache cache : context.getCaches()) {
 			if (operation.isCacheWide()) {
 				logInvalidating(context, operation, null);
-				doClear(cache);
+				doClear(cache, operation.isBeforeInvocation());
 			}
 			else {
 				if (key == null) {
 					key = generateKey(context, result);
 				}
 				logInvalidating(context, operation, key);
-				doEvict(cache, key);
+				doEvict(cache, key, operation.isBeforeInvocation());
 			}
 		}
 	}
@@ -836,7 +836,7 @@ public abstract class CacheAspectSupport extends AbstractCacheInvoker
 		}
 
 		@Override
-		public boolean equals(Object other) {
+		public boolean equals(@Nullable Object other) {
 			if (this == other) {
 				return true;
 			}

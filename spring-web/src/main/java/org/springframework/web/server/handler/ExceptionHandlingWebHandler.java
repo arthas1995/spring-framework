@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -38,10 +38,14 @@ import org.springframework.web.server.WebHandler;
  */
 public class ExceptionHandlingWebHandler extends WebHandlerDecorator {
 
-
 	private final List<WebExceptionHandler> exceptionHandlers;
 
 
+	/**
+	 * Create an {@code ExceptionHandlingWebHandler} for the given delegate.
+	 * @param delegate the WebHandler delegate
+	 * @param handlers the WebExceptionHandlers to apply
+	 */
 	public ExceptionHandlingWebHandler(WebHandler delegate, List<WebExceptionHandler> handlers) {
 		super(delegate);
 		List<WebExceptionHandler> handlersToUse = new ArrayList<>();
@@ -61,7 +65,6 @@ public class ExceptionHandlingWebHandler extends WebHandlerDecorator {
 
 	@Override
 	public Mono<Void> handle(ServerWebExchange exchange) {
-
 		Mono<Void> completion;
 		try {
 			completion = super.handle(exchange);
@@ -73,7 +76,6 @@ public class ExceptionHandlingWebHandler extends WebHandlerDecorator {
 		for (WebExceptionHandler handler : this.exceptionHandlers) {
 			completion = completion.onErrorResume(ex -> handler.handle(exchange, ex));
 		}
-
 		return completion;
 	}
 

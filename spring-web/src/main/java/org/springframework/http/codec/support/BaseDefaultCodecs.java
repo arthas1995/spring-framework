@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -226,7 +226,7 @@ class BaseDefaultCodecs implements CodecConfigurer.DefaultCodecs {
 	 * or for multipart requests only ("true"). Generally the two sets are the
 	 * same except for the multipart writer itself.
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	final List<HttpMessageWriter<?>> getTypedWriters(boolean forMultipart) {
 		if (!this.registerDefaults) {
 			return Collections.emptyList();
