@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2020 the original author or authors.
+ * Copyright 2002-2021 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,6 +29,7 @@ import java.util.function.Predicate;
 import org.reactivestreams.Publisher;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.util.context.Context;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.ReactiveAdapterRegistry;
@@ -39,8 +40,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.reactive.ClientHttpConnector;
 import org.springframework.http.client.reactive.ClientHttpRequest;
+import org.springframework.http.client.reactive.ClientHttpResponse;
 import org.springframework.http.codec.ClientCodecConfigurer;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.reactive.function.BodyExtractor;
 import org.springframework.web.reactive.function.BodyInserter;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.util.DefaultUriBuilderFactory;
@@ -183,13 +186,6 @@ public interface WebClient {
 		 */
 		Builder baseUrl(String baseUrl);
 
-		/**
-		 * Configure default URI variable values that will be used when expanding
-		 * URI templates using a {@link Map}.
-		 * @param defaultUriVariables the default values to use
-		 * @see #baseUrl(String)
-		 * @see #uriBuilderFactory(UriBuilderFactory)
-		 */
 		/**
 		 * Configure default URL variable values to use when expanding URI
 		 * templates with a {@link Map}. Effectively a shortcut for:
@@ -469,6 +465,17 @@ public interface WebClient {
 		 * @return this builder
 		 */
 		S attributes(Consumer<Map<String, Object>> attributesConsumer);
+
+		/**
+		 * Provide a function to populate the Reactor {@code Context}.
+		 * @param contextModifier the function to modify the context with
+		 * @deprecated in 5.3.2 to be removed soon after; this method cannot
+		 * provide context to downstream (nested or subsequent) requests and is
+		 * of limited value.
+		 * @since 5.3.1
+		 */
+		@Deprecated
+		S context(Function<Context, Context> contextModifier);
 
 		/**
 		 * Callback for access to the {@link ClientHttpRequest} that in turn
@@ -877,13 +884,22 @@ public interface WebClient {
 		<T> Mono<ResponseEntity<Flux<T>>> toEntityFlux(Class<T> elementType);
 
 		/**
-		 * Variant of {@link #toEntity(Class)} with a {@link ParameterizedTypeReference}.
+		 * Variant of {@link #toEntityFlux(Class)} with a {@link ParameterizedTypeReference}.
 		 * @param elementTypeReference the type of element to decode the target Flux to
 		 * @param <T> the body element type
 		 * @return the {@code ResponseEntity}
 		 * @since 5.3.1
 		 */
 		<T> Mono<ResponseEntity<Flux<T>>> toEntityFlux(ParameterizedTypeReference<T> elementTypeReference);
+
+		/**
+		 * Variant of {@link #toEntityFlux(Class)} with a {@link BodyExtractor}.
+		 * @param bodyExtractor the {@code BodyExtractor} that reads from the response
+		 * @param <T> the body element type
+		 * @return the {@code ResponseEntity}
+		 * @since 5.3.2
+		 */
+		<T> Mono<ResponseEntity<Flux<T>>> toEntityFlux(BodyExtractor<Flux<T>, ? super ClientHttpResponse> bodyExtractor);
 
 		/**
 		 * Return a {@code ResponseEntity} without a body. For an error response
